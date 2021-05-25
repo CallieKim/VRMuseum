@@ -1,0 +1,119 @@
+Unity Part setup
+
+Step 1- Ensure pc connected to WIFI_0102          //// very important for it to connect to the linux computer.
+
+STEP 2- Open Unity
+
+
+
+STEP 3- Go to each camera unit and insert the power cable to start the camera which is indicated by the led on the camera
+If the camera has been moved even by a little, after steps 4,5,5.1 do room setup, instructions are mentioned below.
+
+STEP 4- Open VRMusuem which is located at C:/Users/IRB0102/Documents/Github/VRMusuem unity file or using unity hub
+Instructions- Start->Search for unity-> Open VRMuseum which belongs to above location
+When unity is starteds it will automatically start steamVR where connection and setup of new vr hardware can be handled
+
+
+STEP 5- Go to the VR headset and insert the power cable to the power bank 
+wait for a green light on the headset
+green light indicates the headset is switched on
+
+
+Step 5.1 - Go to Start-> Search for VR wireless
+open app
+it will automatically connect to VRheadset 
+If it does not, wait for 2 mins to connect, it it does not repeat steps 5,5.1
+ 
+
+
+
+STEP 6.1- remove trackers from charging and insert the same usb to the wireless receiver of each tracker which is marked the same
+(trackers with the bands have tags attached below)
+do this one by one for all trackers
+	swirtch on the tracker by long pressing the button on the tracker
+	once switched on it should automatically connect, look at steam vr app to see status of the trackers
+	if not connected right click on the tracker and click pair tracker and follow instructions
+	if still does not connect attach the same usb to the tracker again and try to switch it on and swirl it around the vr camera. if steam vr shows that it is connected, then remove the usb and connect to wireless receiver like above
+	Keep repeating above until the tracker works
+	if repeating after 3 times the tracker does not work remove the usb cable from the pc and insert it into another usb slot.
+	Keep repeating above until everythin works 
+
+once you see all the trackers are connected go ahead and start unity using play button
+now on the left hand side of the screen find Tracker, Tracker2, wrist_tracker and shoulder_tracker  (the left and right trackers are Tracker and Tracker2 and wrist_tracker and shoulder_tracker are named correclty)
+Follow instructions below for each
+	pick up one of the trackers and keep moving it in the field of view of the cameras, 
+	When you select one of the above mentioned trackers, go to the right hand side of the screen and look for Steam VR_Tracked Object
+	Inside that subcolumn you will find index
+	manually try each device in index until you see a tracker moving on the unity screen 
+	that means you have attached the correct tracker to the correct unity object
+Once done note down all the trackers and thier individ device indexes, press the play button again, this will stop the program. Now again click on each individ tracker and assign the particular index that was noted before. We have to do this as any changes in unity during play mode are not saved and are erased
+and to know which tracker has what index we need to play. 
+
+now attach the left and right trackers on the robot. just slide in the attachment into the 2020 extrusion like in the image robot_trackers and tighten the screw to fix it
+Also it is very important that the trackers face exactly straight wrt robot so that we can localize robot orientation and calibration is good. This is shown in image tracker_robot_orientation
+Then attach shoulder and wrist trackers on the shoulder and wrist of the left arm just like shown in the image hand_trackers(focus on the orientation of both the trackers wrt each other and hand)
+
+
+Room setup- Do this anytime if you move the VR cameras on your own or by mistake
+If you want to set origin of the system to some point in the real world, look at the steam vr app, click on the options logo(3 horiz lines) click room setup and follow instructions
+When doing calibrate floor place the controllers where you want the origin to be. for the planner to work there should be atleast 1.5m place in all sides from the origin, so that makes a 3x3m box atleast.
+
+
+
+Adding another wall to the system-
+just copy one of the walls currently present and paste, change its location to whatever is required. Once done, align the z axis of the wall(blue axis appears when wall selected in scene mode)
+towards the face that the human will be interacting with. for example in the image wall setup, the wall's inner surface is the one that will be used for interaction so align the Z axis in a way that it faces outwards as shown in the image(you can rotate the unity object directly by selecting rotation instead of pan and dragging)
+
+
+
+What to do if wrist bat collides with a wall and still not collision is detected i.e. the collision ball does not appear on screen or vr headset view
+replay the game using play button
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Closing Instructions-
+Remove the power cables from both the cameras
+remove the powerbank and keep it for charging
+remove each tracker and attach it to the usb on which the wireless receivers are connected which are marked the same. Keep the receivers in a safe place
+
+
+
+
+
+
+
+
+
+
+
+Raspberry Pi start-
+switch on the pi using the switch on the power cord of the c-type adapter the one shown in img rpi_power
+now go to the vnc_viewer in the alienware pc and connect to ip-192.169.0.215
+if it connects and shows that display not available, switch off the pi using the switch, reconnect the hdmi wire to the screeen on the robot and the rpi angain and try above steps again
+If it just does not connect even after 5mins and rpi has power, that means either this pc or rpi is not connected to WIFI_0102. ensure you connect both to this wifi connection
+Once you see a normal rpi desktop on the vnc viewer, start a terminal, power up the mtor drivers on the robot using the emergency switch(check if this worked by checking whether there is an glowing led on the drivers, one driver has a bright led and the other one has a dim led but both are correctly working drivers)
+then run command 
+roslaunch roboclaw roboclaw_m.launch 
+if it runs without any error, this was successfull
+
+
+
+
+Known problems with driver- sometimes the driver will shut off if it does not receive power correctly or it experiences too much resistamce while moving a wheel. When this happens the wheels will lose power and the terminal on the vnc viewer will throw an error
+to fix this just switch off the emergency switch, switch it on again, and rerun the above roslaunch command
+when you rerun this you have to rerun all the other ros commands on the linux computer as well so that they can connect to the new ros master launched by the newly run roslaunch command
+ 
+Personally I have seen this happening multiple times and I havent found a good solution to fix this problem. I have seen that wheel 1 seems to be tighter and the gear on wheel 1 is not perfect(the shaft maybe having a small offset on the gear which forces it to wobble) which might be putting higher load on the motor and the driver or the power supply is not able to respond to that load
+

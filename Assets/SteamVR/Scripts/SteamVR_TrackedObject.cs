@@ -11,6 +11,8 @@ namespace Valve.VR
 {
     public class SteamVR_TrackedObject : MonoBehaviour
     {
+
+        public bool isUpdated = false;
         public enum EIndex
         {
             None = -1,
@@ -71,6 +73,9 @@ namespace Valve.VR
                 transform.localPosition = pose.pos;
                 transform.localRotation = pose.rot;
             }
+
+            //Debug.Log("pose of " + (index).ToString() + " updated");
+            isUpdated = true;
         }
 
         SteamVR_Events.Action newPosesAction;

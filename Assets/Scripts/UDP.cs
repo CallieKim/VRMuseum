@@ -37,7 +37,7 @@ public class UDP<T>      //receives only T type and can send any type
         this.senderIp = sendIp;
         this.senderPort = sendPort;
         Debug.Log("Set sender at ip " + sendIp + " and port " + sendPort);
-        StartReceiveThread();
+        //StartReceiveThread();
     }
     private void StartReceiveThread()
     {
@@ -110,7 +110,8 @@ public class UDP<T>      //receives only T type and can send any type
     public void Stop()
     {
         threadRunning = false;
-        receiveThread.Abort();
+        if(receiveThread.IsAlive)
+            receiveThread.Abort();
         if (udpClient != null)
             udpClient.Close();
         Debug.Log("Stop");
